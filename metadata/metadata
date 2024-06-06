@@ -4,6 +4,8 @@ set -e -o pipefail
 # Add repo specific metadata here.
 
 PACKAGE_NAME="Plex Media Server"
+RELEASE_PACKAGE_NAME="Plex Media Server"
+RELEASE_TAG_PACKAGE_NAME="plex"
 UPSTREAM_IMAGE_CONFIG_KEY_PREFIX="BASE_IMAGE"
 UPSTREAM_VERSION_CONFIG_KEY="PLEX_MEDIA_SERVER_VERSION"
 PLEX_MEDIA_SERVER_MAINFEST_URL="https://plex.tv/downloads/details/5?build=linux-x86_64&channel=16&distro=debian"
@@ -26,6 +28,10 @@ update_latest_upstream_version() {
     echo "Updating ${PACKAGE_NAME:?} ${UPSTREAM_VERSION_CONFIG_KEY:?} '${cur_ver:?}' -> '${latest_ver:?}'"
     set_config_arg "${UPSTREAM_VERSION_CONFIG_KEY:?}" "${latest_ver:?}"
     git add ${ARGS_FILE:?}
+}
+
+package_current_release_version() {
+    current_upstream_version | sed -E 's/^([0-9.]+)-[0-9a-f]{9}$/\1/g'
 }
 
 test_start_container() {
