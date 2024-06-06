@@ -6,7 +6,7 @@ set -e -o pipefail
 PACKAGE_NAME="Plex Media Server"
 RELEASE_PACKAGE_NAME="Plex Media Server"
 RELEASE_TAG_PACKAGE_NAME="plex"
-UPSTREAM_IMAGE_CONFIG_KEY_PREFIX="BASE_IMAGE"
+BASE_IMAGE_CONFIG_KEY_PREFIX="BASE_IMAGE"
 UPSTREAM_VERSION_CONFIG_KEY="PLEX_MEDIA_SERVER_VERSION"
 PLEX_MEDIA_SERVER_MAINFEST_URL="https://plex.tv/downloads/details/5?build=linux-x86_64&channel=16&distro=debian"
 TEST_TYPE="foreground"
@@ -18,7 +18,7 @@ current_upstream_version() {
 
 latest_upstream_version() {
     docker run --rm \
-        "$(upstream_image_name)" \
+        "$(base_image_name)" \
         sh -c "apt-get -qq update >/dev/null && apt-get -qq -y install libxml2-utils >/dev/null 2>&1 && curl --silent --location '${PLEX_MEDIA_SERVER_MAINFEST_URL:?}' | xmllint --xpath 'string(//MediaContainer/Release/Package/@fileName)' - | sed -E 's@plexmediaserver_([^_]+)_amd64\.deb@\1@g'"
 }
 
