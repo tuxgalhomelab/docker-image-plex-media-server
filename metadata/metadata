@@ -3,12 +3,15 @@ set -e -o pipefail
 
 # Add repo specific metadata here.
 
-PACKAGE_NAME="Plex Media Server"
+BASE_IMAGE_CONFIG_KEY_PREFIX="BASE_IMAGE"
+
 RELEASE_PACKAGE_NAME="Plex Media Server"
 RELEASE_TAG_PACKAGE_NAME="plex"
-BASE_IMAGE_CONFIG_KEY_PREFIX="BASE_IMAGE"
+
+UPSTREAM_PACKAGE_NAME="Plex Media Server"
 UPSTREAM_VERSION_CONFIG_KEY="PLEX_MEDIA_SERVER_VERSION"
-PLEX_MEDIA_SERVER_MAINFEST_URL="https://plex.tv/downloads/details/5?build=linux-x86_64&channel=16&distro=debian"
+UPSTREAM_PLEX_MEDIA_SERVER_MAINFEST_URL="https://plex.tv/downloads/details/5?build=linux-x86_64&channel=16&distro=debian"
+
 TEST_TYPE="background"
 TEST_CONTAINER_TYPE="plex-media-server"
 TEST_CONTAINER_START_WAIT_SECONDS="10"
@@ -20,7 +23,7 @@ current_upstream_version() {
 latest_upstream_version() {
     docker run --rm \
         "$(base_image_name)" \
-        sh -c "apt-get -qq update >/dev/null && apt-get -qq -y install libxml2-utils >/dev/null 2>&1 && curl --silent --location '${PLEX_MEDIA_SERVER_MAINFEST_URL:?}' | xmllint --xpath 'string(//MediaContainer/Release/Package/@fileName)' - | sed -E 's@plexmediaserver_([^_]+)_amd64\.deb@\1@g'"
+        sh -c "apt-get -qq update >/dev/null && apt-get -qq -y install libxml2-utils >/dev/null 2>&1 && curl --silent --location '${UPSTREAM_PLEX_MEDIA_SERVER_MAINFEST_URL:?}' | xmllint --xpath 'string(//MediaContainer/Release/Package/@fileName)' - | sed -E 's@plexmediaserver_([^_]+)_amd64\.deb@\1@g'"
 }
 
 update_latest_upstream_version() {
