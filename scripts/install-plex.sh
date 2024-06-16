@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e -o pipefail
+set -E -e -o pipefail
 
 plex_meta_arch() {
     local platform="$(uname -m)"

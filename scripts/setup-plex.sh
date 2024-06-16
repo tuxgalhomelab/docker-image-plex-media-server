@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e -o pipefail
+set -E -e -o pipefail
 
 setup_plex() {
     local plex_pref="${HOME:?}/Library/Application Support/Plex Media Server/Preferences.xml"
