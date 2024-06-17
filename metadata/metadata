@@ -23,7 +23,7 @@ current_upstream_version() {
 latest_upstream_version() {
     docker run --rm \
         "$(base_image_name)" \
-        sh -c "apt-get -qq update >/dev/null && apt-get -qq -y install libxml2-utils >/dev/null 2>&1 && curl --silent --location '${UPSTREAM_PLEX_MEDIA_SERVER_MAINFEST_URL:?}' | xmllint --xpath 'string(//MediaContainer/Release/Package/@fileName)' - | sed -E 's@plexmediaserver_([^_]+)_amd64\.deb@\1@g'"
+        sh -c "apt-get -qq update >/dev/null && apt-get -qq -y install libxml2-utils >/dev/null 2>&1 && curl --silent --fail --location '${UPSTREAM_PLEX_MEDIA_SERVER_MAINFEST_URL:?}' | xmllint --xpath 'string(//MediaContainer/Release/Package/@fileName)' - | sed -E 's@plexmediaserver_([^_]+)_amd64\.deb@\1@g'"
 }
 
 update_latest_upstream_version() {

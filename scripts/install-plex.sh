@@ -41,11 +41,11 @@ install_plex() {
     # local distro="debian"
     # local build="linux-$(plex_arch)"
     # local download_meta_url="https://plex.tv/downloads/details/5?build=${build:?}&channel=${channel:?}&distro=${distro:?}"
-    # local deb_url=$(curl --silent --location "${download_meta_url:?}" | tr '\n' ' ' | sed -E 's#.* url="(https://.+)".*#\1#')
+    # local deb_url=$(curl --silent --fail --location "${download_meta_url:?}" | tr '\n' ' ' | sed -E 's#.* url="(https://.+)".*#\1#')
 
     local deb_url="https://downloads.plex.tv/plex-media-server-new/${ver:?}/debian/plexmediaserver_${ver:?}_$(plex_deb_arch).deb"
 
-    curl --silent --location --remote-name --output-dir "${download_dir:?}" "${deb_url:?}"
+    curl --silent --fail --location --remote-name --output-dir "${download_dir:?}" "${deb_url:?}"
 
     dpkg -i ${download_dir:?}/$(basename ${deb_url:?})
 
