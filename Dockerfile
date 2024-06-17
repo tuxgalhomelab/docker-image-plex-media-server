@@ -2,7 +2,7 @@ ARG BASE_IMAGE_NAME
 ARG BASE_IMAGE_TAG
 FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG} AS builder
 
-COPY scripts/install-plex.sh /scripts/setup-plex.sh /scripts/
+COPY scripts/install-plex-media-server.sh /scripts/setup-plex-media-server.sh /scripts/
 
 FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG}
 
@@ -26,9 +26,9 @@ RUN --mount=type=bind,target=/scripts,from=builder,source=/scripts \
         ${GROUP_ID:?} \
         --create-home-dir \
     # Install plex media server. \
-    && /scripts/install-plex.sh ${PLEX_MEDIA_SERVER_VERSION:?} \
+    && /scripts/install-plex-media-server.sh ${PLEX_MEDIA_SERVER_VERSION:?} \
     # Perform initial set up of the config files. \
-    && su --login --shell /bin/bash --command "/scripts/setup-plex.sh" ${USER_NAME:?} \
+    && su --login --shell /bin/bash --command "/scripts/setup-plex-media-server.sh" ${USER_NAME:?} \
     # Clean up. \
     && homelab remove bsdutils util-linux uuid-runtime \
     && homelab cleanup
