@@ -22,6 +22,7 @@ ARG PLEX_MEDIA_SERVER_VERSION
 
 RUN --mount=type=bind,target=/scripts,from=builder,source=/scripts \
     set -E -e -o pipefail \
+    && export HOMELAB_VERBOSE=y \
     # Install dependencies. \
     && homelab install bsdutils util-linux uuid-runtime \
     # Create the user and the group. \
