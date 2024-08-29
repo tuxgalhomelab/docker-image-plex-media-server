@@ -47,7 +47,7 @@ RUN --mount=type=bind,target=/scripts,from=builder,source=/scripts \
 EXPOSE 32400
 
 USER ${USER_NAME}:${GROUP_NAME}
-WORKDIR /
+WORKDIR /home/${USER_NAME}
 
 CMD ["--picoinit-cmd", "start-plex-media-server", "--picoinit-cmd", "tail", "-F", "/home/plex/Library/Logs/Plex Media Server/Plex Media Server.log"]
 STOPSIGNAL SIGTERM
