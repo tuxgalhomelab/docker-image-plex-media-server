@@ -18,6 +18,7 @@ ARG USER_ID
 ARG GROUP_ID
 ARG PLEX_MEDIA_SERVER_VERSION
 
+# hadolint ignore=SC3040
 RUN --mount=type=bind,target=/scripts,from=builder,source=/scripts \
     set -E -e -o pipefail \
     && export HOMELAB_VERBOSE=y \
