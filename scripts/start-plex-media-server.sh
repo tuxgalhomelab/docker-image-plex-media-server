@@ -11,6 +11,8 @@ start_plex_media_server() {
     echo "Starting Plex Media Server ..."
     echo
 
+    rm -f "/home/plex/Library/Application Support/Plex Media Server/plexmediaserver.pid"
+
     exec "/usr/lib/plexmediaserver/Plex Media Server"
 }
 
